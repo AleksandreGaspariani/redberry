@@ -5,23 +5,79 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="css/questionnaire.css">
 
+    <!-- Imported Links -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/fontawesome.min.js" integrity="sha512-PoFg70xtc+rAkD9xsjaZwIMkhkgbl1TkoaRrgucfsct7SVy9KvTj5LtECit+ZjQ3ts+7xWzgfHOGzdolfWEgrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Redberry - Questionnaire</title>
 </head>
 <body>
     <div class="container">
-        <div>
-            <h1>Hey, Rocketeer, what are your coordinates?</h1>
-            <input type="text" placeholder="First Name">
-            <input type="text" placeholder="Last Name">
-            <input type="email" placeholder="E Mail">
-            <input type="text" placeholder="+995 5__ __ __ __">
+        <div class="questions">
+            <div class="formstage" tab="1">
+                <h1>Hey, Rocketeer, what are your coordinates?</h1>
+                <input type="text" placeholder="First Name" id="firstname" name="firstname">
+                <small id="firstnameErr"></small>
+                <input type="text" placeholder="Last Name" id="lastname" name="lastname">
+                <small id="lastnameErr"></small>
+                <input type="email" placeholder="E Mail" id="email" name="email">
+                <small id="emailErr"></small>
+                <input type="text" placeholder="+995 5__ __ __ __" id="phoneNumber" name="number">
+                <small id="phoneErr"></small>
+            </div>
+            <div class="formstage hide" tab="2">
+                <h1>Tell us about your skills</h1>
+                <select name="skills" id="skills">
+                    <option value="Skills">Skills</option>
+                </select>
+                <input type="text" placeholder="Experience Duration in Years">
+                <div style="position: relative;">
+                    <button>Add Programming Language</button>
+                </div>
+                <section class="skilllist">
+                    <div>
+                        <div><b>PHP</b></div>
+                        <div><b>Years of experience: <strong>3</strong></b></div>
+                        <div><i class="fa-solid fa-circle-minus"></i></div>
+                    </div>
+                </section>
+            </div>
+            <div class="formstage hide" tab="3">
+                <h1>Hey, Rocketeer, what are your coordinates?</h1>
+                <input type="text" placeholder="First Name">
+                <input type="text" placeholder="Last Name">
+                <input type="email" placeholder="E Mail">
+                <input type="text" placeholder="+995 5__ __ __ __">
+            </div>
+            <div class="formstage hide" tab="4">
+                <h1>Hey, Rocketeer, what are your coordinates?</h1>
+                <input type="text" placeholder="First Name" required>
+                <input type="text" placeholder="Last Name">
+                <input type="email" placeholder="E Mail">
+                <input type="text" placeholder="+995 5__ __ __ __">
+            </div>
+            
+            <div id="stages">
+                <i class="fa-solid fa-circle-left"></i>
+                <i class="fa-solid fa-circle active"></i>
+                <i class="fa-solid fa-circle"></i>
+                <i class="fa-solid fa-circle"></i>
+                <i class="fa-solid fa-circle"></i>
+                <i class="fa-solid fa-circle"></i>
+                <i class="fa-solid fa-circle-right"></i>
+            </div>
         </div>
-        <div>
-            <h1>Redberry Origins</h1>
-            <p>You watch “What? Where? When?” Yeah. Our founders used to play it. That’s where they got a question about a famous American author and screenwriter Ray Bradbury. Albeit, our CEO Gaga Darsalia forgot the exact name and he answered Ray Redberry. And at that moment, a name for a yet to be born company was inspired - Redberry 😇</p>
+        <div class="info">
+            <h1 id="title"></h1>
+            <p id="description"></p>
         </div>
+        
     </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

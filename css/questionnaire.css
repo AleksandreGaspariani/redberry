@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Rowdies:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Rowdies:wght@300&display=swap');
 
 *{
     box-sizing: border-box;
@@ -22,6 +22,9 @@ body {
 }
 
 .questions  {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     padding-top: 3rem;
     background-color: #fff;
     width: 100%;
@@ -47,6 +50,8 @@ body {
 
 .questions > div > input,
 .questions > div > select {
+    font-family: 'Montserrat';
+    font-weight: 800;
     color: #8d8d8d;
     margin-top: 1rem;
     width: 455px;
@@ -111,6 +116,9 @@ body {
 }
 
 .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     background-color: #0C0D0E;
     padding: 7rem;
     padding-top: 3rem;

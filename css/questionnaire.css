@@ -145,38 +145,145 @@ body {
     display: none !important;
 }
 .skilllist {
-    height: 50vh;
-    overflow-y: auto;
+    height: auto;
+    /* overflow-y: auto; */
 }
 
-.skilllist > div {
+.skilllist > section {
     display: flex;
     border: 1px solid #8d8d8d ;
     margin: 1rem 0rem;
     padding: .8rem 0rem;
 }
-.skilllist > div > div > i{
+.skilllist > section > div > i{
     cursor: pointer;
     font-size: 24px;
     text-align: end;
     color: #FE3B1F;
 }
-.skilllist > div > div {
+.skilllist > section > div {
     color: #0C0D0E;
     display: inline-flex;
 }
-.skilllist > div > div:nth-of-type(1){
+.skilllist > section > div:nth-of-type(1){
     justify-content: center;
     align-items: center;
     width: 100px;
 }
-.skilllist > div > div:nth-of-type(2){
+.skilllist > section > div:nth-of-type(2){
     justify-content: flex-start;
     align-items: center;
     width: 300px;
 }
-.skilllist > div > div:nth-of-type(3){
+.skilllist > section > div:nth-of-type(3){
     align-items: center;
     justify-content: center;
     width: 55px;
+}
+
+/* third form  */
+
+#stage3 > div {
+    display: flex;
+    flex-direction: column;
+}
+#stage3 div section{
+    margin-top: 1rem;
+}
+#stage3 div section h3{
+    font-family: 'Montserrat';
+}
+.round span{
+    height: 15px;
+    width: 15px;
+    border: 1px solid #8d8d8d;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.round {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1rem;
+}
+.round p {
+    margin-left: 1rem;
+}
+
+.checkedSpan {
+    background-color: #8d8d8d;
+}
+
+#contactCovid,
+#vacinated {
+    display: none;
+    margin-top: 2rem;
+}
+
+#contactCovid h2,
+#vacinated h2{
+    font-family: 'Montserrat';
+    font-size: 18px;
+}
+
+#contactCovid input,
+#vacinated input {
+    margin-top: 1rem;
+    font-family: 'Montserrat';
+    font-weight: 800;
+    color: #8d8d8d;
+    margin-top: 1rem;
+    width: 455px;
+    padding: .8rem 2rem;
+    border: 1px solid #8d8d8d;
+    text-align: left;
+}
+
+/* fourth form */
+
+#stage4 section {
+    display: flex;
+    width: 75%;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+#stage4 section textarea {
+    margin-top: 1rem;
+    max-width: 355px;
+    max-height: 100px;
+    resize: none;
+    color: #8d8d8d;
+    padding: 1.5rem 1rem .5rem 1rem;
+    border: 1px solid #8d8d8d;
+    font-family: 'Montserrat';
+    letter-spacing: 1px;
+}
+
+/* Submit stage */
+
+#submitForm {
+    height: 100vh;
+    width: 100%;
+    background: #0C0D0E;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#submitForm a {
+    color: white;
+    margin-top: 2rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.submitBtn {
+    font-family: 'Montserrat';
+    cursor: pointer;
+    font-size: 25px;
+    color: #fff;
+    padding: 1rem 4rem;
+    border-radius: 50px;
+    background: #FE3B1F;
+    border: none;
 }

@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="questions">
+        <div class="questions hide">
             <div class="formstage hide" id="stage1" tab="1">
                 <h1>Hey, Rocketeer, what are your coordinates?</h1>
                 <input type="text" placeholder="First Name" id="firstname" name="firstname">
@@ -28,38 +28,94 @@
                 <small id="numberErr"></small>
                 <button id="testbtn">test</button>
             </div>
-            <div class="formstage" id="stage2" tab="2">
+            <div class="formstage hide" id="stage2" tab="2">
                 <h1>Tell us about your skills</h1>
                 <select name="skills" id="skills">
                     
                 </select>
-                <input type="text" placeholder="Experience Duration in Years">
+                <input type="text" placeholder="Experience Duration in Years" id="experienceYear">
                 <div style="position: relative;">
-                    <button>Add Programming Language</button>
+                    <button id="addLanguage">Add Programming Language</button>
                 </div>
                 <section class="skilllist">
-                    <div>
-                        <div><b>PHP</b></div>
-                        <div><b>Years of experience: <strong>3</strong></b></div>
-                        <div><i class="fa-solid fa-circle-minus"></i></div>
-                    </div>
+                
                 </section>
             </div>
             <div class="formstage hide" id="stage3" tab="3">
-                <h1>Hey, Rocketeer, what are your coordinates?</h1>
-                <input type="text" placeholder="First Name">
-                <input type="text" placeholder="Last Name">
-                <input type="email" placeholder="E Mail">
-                <input type="text" placeholder="+995 5__ __ __ __">
+                <h1>Covid Stuff</h1>
+                <div>
+                    <section>
+                        <h3>how would you prefer to work?</h3>
+                        <div class="round">
+                            <span onclick="checkSpan(this)" id="fromOffice"></span>
+                            <p>From Sairme Office</p>
+                        </div>
+                        <div class="round">
+                            <span onclick="checkSpan(this)" id="fromHome"></span>
+                            <p>From Home</p>
+                        </div>
+                        <div class="round">
+                            <span onclick="checkSpan(this)" id="hybrid"></span>
+                            <p>Hybrid</p>
+                        </div>
+                    </section>
+                    
+                    <section>
+                        <h3>Did you contact covid 19? :(</h3>
+                        <div class="round">
+                            <span onclick="checkSpan(this)" id="covidYes"></span>
+                            <p>Yes</p>
+                        </div>
+                        <div class="round">
+                            <span onclick="checkSpan(this)" id="covidNo"></span>
+                            <p>No</p>
+                        </div>
+                        <div id="contactCovid">
+                            <h2>When ?</h2>
+                            <input type="date" placeholder="Data" name="covid" id="covidDate">
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3>Have you been vaccinated?</h3>
+                        <div class="round">
+                            <span onclick="checkSpan(this)" id="vaccinatedYes"></span>
+                            <p>Yes</p>
+                        </div>
+                        <div class="round">
+                            <span onclick="checkSpan(this)" id="vaccinatedNo"></span>
+                            <p>No</p>
+                        </div>
+                        <div id="vacinated">
+                            <h2>When did you get your last covid vaccine?</h2>
+                            <input type="date" placeholder="Data" name="covid" id="vaccineDate">
+                        </div>
+                    </section>
+                </div>
             </div>
-            <div class="formstage hide" id="stage4" tab="4">
-                <h1>Hey, Rocketeer, what are your coordinates?</h1>
-                <input type="text" placeholder="First Name" required>
-                <input type="text" placeholder="Last Name">
-                <input type="email" placeholder="E Mail">
-                <input type="text" placeholder="+995 5__ __ __ __">
+            <div class="formstage" id="stage4" tab="4">
+                <h1>What about you?</h1>
+                <section>
+                    <h3>Would you attend Devtalks and maybe also organize your own?</h3>
+                    <div class="round">
+                        <span onclick="checkSpan(this)" id="devtalksYes"></span>
+                        <p>Yes</p>
+                    </div>
+                    <div class="round">
+                        <span onclick="checkSpan(this)" id="devtalksNo"></span>
+                        <p>No</p>
+                    </div>
+                </section>
+                <section>
+                    <h3>What would you speak about at Devtalk?</h3>
+                    <textarea name="devtalk" id="devtalks" cols="30" rows="10">I would...</textarea>
+                </section>
+                <section>
+                    <h3>Tell us something special</h3>
+                    <textarea name="devtalk" id="devtalks" cols="30" rows="10">I...</textarea>
+                </section>
             </div>
-            
+
             <div id="stages">
                 <i class="fa-solid fa-circle-left"></i>
                 <i class="fa-solid fa-circle active" data-index="1"></i>
@@ -70,9 +126,13 @@
                 <i class="fa-solid fa-circle-right"></i>
             </div>
         </div>
-        <div class="info">
+        <div class="info hide">
             <h1 id="title"></h1>
             <p id="description"></p>
+        </div>
+        <div id="submitForm">
+            <button class="submitBtn">Submit</button>
+            <a onclick="goBack()">go back</a>
         </div>
     </div>
 

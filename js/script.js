@@ -151,8 +151,21 @@ function redBorder(text){
     $(`#${text}`).css('border','1px solid red');
 }
 
+function removeSkill(element){
+    $(element).closest('section').remove();
+}
 
+function checkSpan(index){
+   $(index).toggleClass('checkedSpan');
+}
+
+function goBack(){
+    $('#submitForm').addClass('hide');
+    $('.questions').removeClass('hide');
+    $('.info').removeClass('hide');
+}
 // ajax request to skills api.
+
 
 $(function(){
     let skills = $('#skills');
@@ -169,3 +182,22 @@ $(function(){
         }
     });
 });
+
+
+$('#addLanguage').on('click',function(){
+    var skill = $("#skills option:selected").val();
+    console.log(skill);
+
+    let experience = $('#experienceYear').val();
+
+    let skilllist = $('.skilllist');
+    skilllist.append(`
+        <section>
+            <div><b>${skill}</b></div>
+            <div><b>Years of experience: <strong>${experience}</strong></b></div>
+            <div><i class="fa-solid fa-circle-minus" onclick="removeSkill(this)"></i></div>
+        </section>
+    `);
+
+});
+

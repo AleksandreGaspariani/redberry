@@ -154,3 +154,18 @@ function redBorder(text){
 
 // ajax request to skills api.
 
+$(function(){
+    let skills = $('#skills');
+
+    $.ajax({
+        type: 'GET',
+        url: 'https://bootcamp-2022.devtest.ge/api/skills',
+        success: function(skillList){
+            $.each(skillList, function(i, skill){
+                skills.append(`
+                    <option value="${skill.title}">${skill.title}</option>
+                `);
+            });
+        }
+    });
+});

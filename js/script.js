@@ -176,7 +176,7 @@ $(function(){
         success: function(skillList){
             $.each(skillList, function(i, skill){
                 skills.append(`
-                    <option value="${skill.title}">${skill.title}</option>
+                    <option value="${skill.title}" id="skill-${skill.id}">${skill.title}</option>
                 `);
             });
         }

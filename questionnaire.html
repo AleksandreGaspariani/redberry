@@ -15,8 +15,8 @@
 </head>
 <body>
     <div class="container">
-        <div class="questions hide">
-            <div class="formstage hide" id="stage1" tab="1">
+        <div class="questions">
+            <div class="formstage" id="stage1" tab="1">
                 <h1>Hey, Rocketeer, what are your coordinates?</h1>
                 <input type="text" placeholder="First Name" id="firstname" name="firstname">
                 <small id="firstnameErr"></small>
@@ -93,7 +93,7 @@
                     </section>
                 </div>
             </div>
-            <div class="formstage" id="stage4" tab="4">
+            <div class="formstage hide" id="stage4" tab="4">
                 <h1>What about you?</h1>
                 <section>
                     <h3>Would you attend Devtalks and maybe also organize your own?</h3>
@@ -126,11 +126,11 @@
                 <i class="fa-solid fa-circle-right"></i>
             </div>
         </div>
-        <div class="info hide">
+        <div class="info">
             <h1 id="title"></h1>
             <p id="description"></p>
         </div>
-        <div id="submitForm">
+        <div id="submitForm hide">
             <button class="submitBtn">Submit</button>
             <a onclick="goBack()">go back</a>
         </div>

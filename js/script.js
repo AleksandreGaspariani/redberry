@@ -37,79 +37,120 @@ for (var i = 0 ; i < stage.length ; i++) {
 $('#stages .fa-circle').click(function() {
     var index = $(this).index();
     
-    var firstname = document.getElementById('firstname');
-    var lastname = document.getElementById('lastname');
-    var email = document.getElementById('email');
-    var number = document.getElementById('phoneNumber');
+    if (isValidFirstForm('firstname','lastname','email','number')){
+        if(checkIndex(this)){
+            changeIndex(this); 
+        }
+    }
 
-    firstname.addEventListener('focusin',()=>{
-        $('#firstname').css('border','1px solid #8d8d8d');
-        firstname.addEventListener('focusout',()=>{
-            $('#firstnameErr').text('');
-        });
-    });
-    lastname.addEventListener('focusin',()=>{
-        $('#lastname').css('border','1px solid #8d8d8d');
-        lastname.addEventListener('focusout',()=>{
-            $('#lastnameErr').text('');
-        });
-    });
-    email.addEventListener('focusin',()=>{
-        $('#email').css('border','1px solid #8d8d8d');
-        email.addEventListener('focusout',()=>{
-            $('#emailErr').text('');
-        });
-    });
-    number.addEventListener('focusin',()=>{
-        $('#phoneNumber').css('border','1px solid #8d8d8d');
-        email.addEventListener('focusout',()=>{
-            $('#phoneErr').text('');
-        });
-    });
     
-    // firstname validation
-
-    if(firstname.value.length != 0){
-        if(firstname.value.length < 2){
-            $('#firstname').css('border','1px solid red');
-            $('#firstnameErr').text('* first name should include 2 or more characters');
-        }
-    }else if(firstname.value.length === 0){
-        $('#firstname').css('border','1px solid red');
-        $('#firstnameErr').text('* first name is required');
-    }
-    // lastname validation
-    if(lastname.value.length != 0){
-        if(lastname.value.length < 2){
-            $('#lastname').css('border','1px solid red');
-            $('#lastnameErr').text('* last name should include 2 or more characters');
-        }
-    }else if(lastname.value.length === 0){
-        $('#lastname').css('border','1px solid red');
-        $('#lastnameErr').text('* last name is required');
-    }
-    // email validation
-    let checkEmail = email.value.split('');
-
-    if(email.value.length != 0){
-        if(!checkEmail.includes('@',0) === true){
-            $('#email').css('border','1px solid red');
-            $('#emailErr').text('* wrong email.')
-        }
-    }else{
-        $('#email').css('border','1px solid red');
-        $('#emailErr').text('* email is required');
-    }
-    
-    // number validation.
-    let num = number.value.split('');
-    if(num.length < 1){
-        $('#phoneNumber').css('border','1px solid red');
-        $('#phoneErr').text('* phone number is required');
-    }
-    if(num.length > 13){
-        $('#phoneNumber').css('border','1px solid red');
-        $('#phoneErr').text('* wrong number format (+995 5__ __ __ __)');
-    }
 });
+
+function isValidFirstForm(firstname, lastname, email, phone){
+    
+    textValidate(firstname);
+    textValidate(lastname);
+    emailValidate(email);
+    phoneValidate(phone);
+
+    if (textValidate(firstname) && textValidate(lastname) && emailValidate(email) && phoneValidate(phone)) {
+        return true;
+    }
+    
+}
+
+function phoneValidate(phone){
+    if (phone != undefined) {
+
+        $(`#${phone}`).focusin(()=>{
+            $(`#${phone}`).css('border','1px solid #8d8d8d');
+            $(`#${phone}`).focusout(()=>{ 
+                $(`#${phone}Err`).text('');
+            });
+        });
+
+        let number = $(`#${phone}`).val(); 
+        if(number.length > 0 && number.length != 13 ){
+            redBorder(phone);
+            $(`#${phone}Err`).text('* wrong number format (+995 5__ __ __ __)');
+        }else if(number.length === 0){
+            redBorder(phone);
+            $(`#${phone}Err`).text(`* `+$(`#${phone}`).attr("name")+` is required`);
+        }else{
+            return true;
+        }
+    }
+}
+
+function emailValidate(email){
+    if (email != undefined) {
+        let validemail = $(`#${email}`).val();
+        validemail = validemail.split('');
+
+        $(`#${email}`).focusin(()=>{
+            $(`#${email}`).css('border','1px solid #8d8d8d');
+            $(`#${email}`).focusout(()=>{ 
+                $(`#${email}Err`).text('');
+            });
+        });
+
+        if (validemail.length != 0 && !validemail.includes('@',0)) {
+            redBorder(email);
+            $(`#${email}Err`).text(`* Wrong `+$(`#${email}`).attr("placeholder")+``);
+        }else if (validemail.length === 0) {
+            redBorder(email);
+            $(`#${email}Err`).text(`* `+$(`#${email}`).attr("placeholder")+` is required`);
+        }else{
+            return true;
+        }
+    }
+}
+
+function textValidate(text){
+    if (text != undefined) {
+        var valid = $(`#${text}`).val();
+
+        $(`#${text}`).focusin(()=>{
+            $(`#${text}`).css('border','1px solid #8d8d8d');
+            $(`#${text}`).focusout(()=>{ 
+                $(`#${text}Err`).text('');
+            });
+        });
+
+        
+        if(valid.length > 0 && valid.length < 2){
+            $(`#${text}`).css('border','1px solid red');
+            $(`#${text}Err`).text(`* `+$(`#${text}`).attr("placeholder")+` should include 2 or more characters`);
+        }else if(valid.length === 0){
+            $(`#${text}`).css('border','1px solid red');
+            $(`#${text}Err`).text(`* `+$(`#${text}`).attr("placeholder")+` is required`);
+        }else{
+            return true;
+        }
+        
+    }
+}
+
+function changeIndex(element){
+    let index = $(element).attr('data-index');
+    let activeIndex = $('#stages .active').attr('data-index');
+    $('#stages .active').removeClass('active');
+    $('[data-index="'+index+'"]').addClass('active');
+    $('#stage'+activeIndex).addClass('hide');
+    $('#stage'+index).removeClass('hide');
+}
+
+function checkIndex(element){
+    if($(element).hasClass('active')){
+        return false;
+    }
+    return true;
+}
+
+function redBorder(text){
+    $(`#${text}`).css('border','1px solid red');
+}
+
+
+// ajax request to skills api.
 

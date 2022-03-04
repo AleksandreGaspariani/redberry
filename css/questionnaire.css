@@ -212,7 +212,7 @@ body {
 
 #contactCovid,
 #vacinated {
-    display: none;
+    display: block;
     margin-top: 2rem;
 }
 

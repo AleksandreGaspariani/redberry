@@ -180,14 +180,23 @@ function goBack(){
     $('.questions').removeClass('hide');
     $('.info').removeClass('hide');
 }
+
 // ajax request to skills api.
 
-$(function(){
+function appendSkills(){
+    let url = 'https://bootcamp-2022.devtest.ge/api/skills';
+    getSkills(url); 
+    // console.log(skillList);
+}
+
+function getSkills(url,data = {}){
+
     let skills = $('#skills');
 
     $.ajax({
         type: 'GET',
-        url: 'https://bootcamp-2022.devtest.ge/api/skills',
+        url: url,
+        data: data,
         success: function(skillList){
             $.each(skillList, function(i, skill){
                 skills.append(`
@@ -196,13 +205,12 @@ $(function(){
             });
         }
     });
-});
+}
 
 // dynamically add skills
 
 $('#addSkill').on('click',function(){
     var skill = $("#skills option:selected").val();
-    console.log(skill);
 
     let experience = $('#experienceYear').val();
 
@@ -219,20 +227,26 @@ $('#addSkill').on('click',function(){
 
 // ajax get applications
 
+
+
+
 $(function(){
-    let skills = $('#skills');
 
     $.ajax({
         type: 'GET',
         url: 'https://bootcamp-2022.devtest.ge/api/applications',
+        data: {
+            'token' : '76829518-074f-4701-ba25-a639b3d8ba30'
+        },
         success: function(applications){
             $.each(applications, function(i, application){
                 console.log(application);
-                // skills.append(`
-                //     <option value="${skill.title}" id="skill-${skill.id}">${skill.title}</option>
-                // `);
             });
         }
     });
 });
 
+
+$( document ).ready(function() {
+    appendSkills();
+});

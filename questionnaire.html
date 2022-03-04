@@ -16,7 +16,7 @@
 <body>
     <div class="container">
         <div class="questions">
-            <div class="formstage" id="stage1" tab="1">
+            <div class="formstage hide" id="stage1" tab="1">
                 <h1>Hey, Rocketeer, what are your coordinates?</h1>
                 <input type="text" placeholder="First Name" id="firstname" name="firstname">
                 <small id="firstnameErr"></small>
@@ -27,7 +27,7 @@
                 <input type="tel" placeholder="+995 5__ __ __ __" id="number" name="number" pattern="[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}[0-9]{2}">
                 <small id="numberErr"></small>
             </div>
-            <div class="formstage hide" id="stage2" tab="2">
+            <div class="formstage" id="stage2" tab="2">
                 <h1>Tell us about your skills</h1>
                 <select name="skills" id="skills">
                     
@@ -71,7 +71,7 @@
                         </div>
                         <div id="contactCovid">
                             <h2>When ?</h2>
-                            <input type="date" placeholder="Data" name="covid" id="covidDate">
+                            <input type="date" placeholder="Date" name="covid" id="covidDate">
                         </div>
                     </section>
 

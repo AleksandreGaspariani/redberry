@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Rowdies:wght@300&display=swap');
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body {
+    background: #0C0D0E;
+}
+.container {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 3rem 15vw;
+    width: 100%;
+}
+.container h1{
+    font-family: 'Rowdies';
+    color: #fff;
+    text-align: left;
+    font-weight: 700;
+    font-size: 46px;
+    letter-spacing: 7px;
+
+}
+.applications {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.application{
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.application .header{
+    background-color: #FE3B1F;
+    padding: .3rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.application .header p{
+    text-align: left;
+    margin-left: .5rem;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    color: #fff;
+}
+
+.application .header i{
+    text-align: right;
+    margin-right: .5rem;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.application .content {
+    padding: 2rem 3rem 5rem 3rem;
+    transition: 1s ease;
+    width: 100%;
+    background-color: #fff;
+    
+}
+.justifContent {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+
+.hide {
+    display: none;
+}
+
+.infoTab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.infoTab div {
+    margin-top: 1.7rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.infoTab div p {
+    width: 100%;
+    margin-left: 1rem;
+    color: #454545;
+    font-style: italic;
+    font-family: 'Montserrat';
+    text-align: left;
+    word-wrap: unset;
+}
+.infoTab div label {
+    width: 100%;
+    color: #0C0D0E;
+    font-weight: 700;
+    font-size: 16px;
+    font-style: italic;
+    font-family: 'Montserrat';
+}
+.col input {
+    margin-top: 1rem;
+    font-family: 'Montserrat';
+    font-weight: 800;
+    color: #8d8d8d;
+    margin-top: 1rem;
+    width: 70%;
+    padding: .8rem 2rem;
+    border: 1px solid #8d8d8d;
+    text-align: left;
+}
+.infoTab h1{
+    font-size: 24px;
+    font-family: 'Montserrat';
+    letter-spacing: 2px;
+    color: #FE3B1F;
+    text-decoration: underline;
+    font-style: italic;
+    margin: 2rem 0rem 1rem 0rem ;
+    width: 100%;
+    text-align: left;
+}
+
+.round span{
+    height: 15px;
+    width: 15px;
+    border: 1px solid #8d8d8d;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.round {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1rem;
+}
+.round p {
+    margin-left: 1rem;
+}
+
+.col {
+    flex-direction: column !important;
+}
+
+.contentRight,
+.contentLeft{
+    width: 50%;
+}
+
+.col textarea {
+    margin-top: 2rem;
+    width: 100%;
+    max-height: 100px;
+    resize: none;
+    color: #8d8d8d;
+    padding: 1.5rem 1rem .5rem 1rem;
+    border: 1px solid #8d8d8d;
+    font-family: 'Montserrat';
+    letter-spacing: 1px;
+}
+
+.expandedHeaderColor{
+    background-color: #F05039 !important;
+}

@@ -82,7 +82,7 @@ body {
 
 .formstage > small {
     width: 455px;
-    color: red;
+    color: #FE3B1F;
     font-weight: 900;
     text-align: left;
     padding-left: 2rem;
@@ -174,11 +174,6 @@ body {
     justify-content: flex-start;
     align-items: center;
     width: 300px;
-}
-.skilllist > section > div:nth-of-type(3){
-    align-items: center;
-    justify-content: center;
-    width: 55px;
 }
 
 /* third form  */

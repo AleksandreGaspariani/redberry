@@ -119,10 +119,10 @@ function textValidate(text){
 
         
         if(valid.length > 0 && valid.length < 2){
-            $(`#${text}`).css('border','1px solid red');
+            redBorder(text);
             $(`#${text}Err`).text(`* `+$(`#${text}`).attr("placeholder")+` should include 2 or more characters`);
         }else if(valid.length === 0){
-            $(`#${text}`).css('border','1px solid red');
+            redBorder(text);
             $(`#${text}Err`).text(`* `+$(`#${text}`).attr("placeholder")+` is required`);
         }else{
             return true;
@@ -130,6 +130,8 @@ function textValidate(text){
         
     }
 }
+
+// change form w/o refresh
 
 function changeIndex(element){
     let index = $(element).attr('data-index');
@@ -147,17 +149,31 @@ function checkIndex(element){
     return true;
 }
 
+
+
 function redBorder(text){
-    $(`#${text}`).css('border','1px solid red');
+    $(`#${text}`).css('border','1px solid #FE3B1F');
 }
 
 function removeSkill(element){
     $(element).closest('section').remove();
 }
 
+// check single application
+
+function expandContent(element){
+    let elem = $(element).parent().parent().attr('id');
+    $(`#${elem} .header`).toggleClass('expandedHeaderColor');
+    $(`#${elem} .content`).toggleClass('hide').toggleClass('justifContent');
+}
+
+// toggle class for span to get sure its checked
+
 function checkSpan(index){
    $(index).toggleClass('checkedSpan');
 }
+
+// go back to forms
 
 function goBack(){
     $('#submitForm').addClass('hide');
@@ -165,7 +181,6 @@ function goBack(){
     $('.info').removeClass('hide');
 }
 // ajax request to skills api.
-
 
 $(function(){
     let skills = $('#skills');
@@ -183,8 +198,9 @@ $(function(){
     });
 });
 
+// dynamically add skills
 
-$('#addLanguage').on('click',function(){
+$('#addSkill').on('click',function(){
     var skill = $("#skills option:selected").val();
     console.log(skill);
 
@@ -199,5 +215,24 @@ $('#addLanguage').on('click',function(){
         </section>
     `);
 
+});
+
+// ajax get applications
+
+$(function(){
+    let skills = $('#skills');
+
+    $.ajax({
+        type: 'GET',
+        url: 'https://bootcamp-2022.devtest.ge/api/applications',
+        success: function(applications){
+            $.each(applications, function(i, application){
+                console.log(application);
+                // skills.append(`
+                //     <option value="${skill.title}" id="skill-${skill.id}">${skill.title}</option>
+                // `);
+            });
+        }
+    });
 });
 

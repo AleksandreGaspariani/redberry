@@ -99,7 +99,9 @@ body {
     align-items: flex-start;
     justify-content: flex-start;
 }
-.infoTab div p {
+
+
+.infoTab div p{
     width: 100%;
     margin-left: 1rem;
     color: #454545;
@@ -108,7 +110,7 @@ body {
     text-align: left;
     word-wrap: unset;
 }
-.infoTab div label {
+.infoTab div label{
     width: 100%;
     color: #0C0D0E;
     font-weight: 700;
@@ -151,10 +153,17 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
     margin-top: 1rem;
 }
-.round p {
+.round label {
     margin-left: 1rem;
+}
+
+.round input {
+    text-align: left;
+    margin-left: 0px;
+    text-align: left;
 }
 
 .col {
@@ -164,6 +173,10 @@ body {
 .contentRight,
 .contentLeft{
     width: 50%;
+}
+
+.checkedSpan {
+    background-color: #8d8d8d;
 }
 
 .col textarea {
@@ -180,4 +193,17 @@ body {
 
 .expandedHeaderColor{
     background-color: #F05039 !important;
+}
+
+.contentRight div:first-child div {
+    display: flex;
+    flex-direction: column !important;
+    align-items: center;
+}
+
+.contentRight div:first-child div div {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: flex-start;
 }

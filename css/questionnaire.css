@@ -188,13 +188,6 @@ body {
 #stage3 div section h3{
     font-family: 'Montserrat';
 }
-.round span{
-    height: 15px;
-    width: 15px;
-    border: 1px solid #8d8d8d;
-    border-radius: 50%;
-    cursor: pointer;
-}
 
 .round {
     display: flex;
@@ -205,14 +198,14 @@ body {
 .round p {
     margin-left: 1rem;
 }
-
-.checkedSpan {
-    background-color: #8d8d8d;
+.round label {
+    margin-left: 1rem;
 }
 
+
 #contactCovid,
-#vacinated {
-    display: block;
+#vaccinated {
+    display: none;
     margin-top: 2rem;
 }
 

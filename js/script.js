@@ -167,12 +167,6 @@ function expandContent(element){
     $(`#${elem} .content`).toggleClass('hide').toggleClass('justifContent');
 }
 
-// toggle class for span to get sure its checked
-
-function checkSpan(index){
-   $(index).toggleClass('checkedSpan');
-}
-
 // go back to forms
 
 function goBack(){
@@ -186,7 +180,6 @@ function goBack(){
 function appendSkills(){
     let url = 'https://bootcamp-2022.devtest.ge/api/skills';
     getSkills(url); 
-    // console.log(skillList);
 }
 
 function getSkills(url,data = {}){
@@ -225,28 +218,239 @@ $('#addSkill').on('click',function(){
 
 });
 
+
+
+
 // ajax get applications
 
-
-
-
-$(function(){
+function getApplications(){
 
     $.ajax({
         type: 'GET',
         url: 'https://bootcamp-2022.devtest.ge/api/applications',
         data: {
-            'token' : '76829518-074f-4701-ba25-a639b3d8ba30'
+            'token' : '89nOpas|asdanjjh^&as'
         },
         success: function(applications){
-            $.each(applications, function(i, application){
-                console.log(application);
-            });
+
+            loadApplications(applications);
+            
         }
     });
-});
+
+};
+// get skill by id for draw in application
+
+function getSkillById(id){
+    const list = [
+        {
+            "id": 1,
+            "title": "HTML"
+        },
+        {
+            "id": 2,
+            "title": "CSS"
+        },
+        {
+            "id": 3,
+            "title": "PHP"
+        },
+        {
+            "id": 4,
+            "title": "Laravel"
+        },
+        {
+            "id": 5,
+            "title": "React.JS"
+        },
+        {
+            "id": 6,
+            "title": "Vue.JS"
+        },
+        {
+            "id": 7,
+            "title": "Svelte"
+        },
+        {
+            "id": 8,
+            "title": "Angular"
+        }
+    ];
+    let response;
+    list.forEach(element => {
+        if (element['id'] == id) {
+            response = element.title; 
+        }
+    });
+    return response;
+}
+
+// check radio buttons if it's true or false.
+function hadCovid(index,application){
+    if (application['had_covid']) {
+        $(`#covidYes_${index}`).toggleClass('checkedSpan');
+    }else{
+        $(`#covidNo_${index}`).toggleClass('checkedSpan');
+    }
+}
+
+function vaccinated(index,application){
+    if (application['vaccinated']) {
+        $(`#vaccinatedYes_${index}`).toggleClass('checkedSpan');
+    }else{
+        $(`#vaccinatedNo_${index}`).toggleClass('checkedSpan');
+    }
+}
+
+function willOrganizeDevtalk(index,application){
+    if (application['vaccinated']) {
+        $(`#devtalksYes_${index}`).toggleClass('checkedSpan');
+    }else{
+        $(`#devtalksNo_${index}`).toggleClass('checkedSpan');
+    }
+}
+
+function preferToWorkCheck(index,application){
+    $(`#${application['work_preference']}_${index}`).toggleClass('checkedSpan');
+}
+
+// draw application
+
+function drawApplicationForm(index, application){
+
+    $('.applications').append(`<div class="application" id="app-${index}">
+        <div class="header">
+            <p>${index}</p>
+            <i class="fa-solid fa-angle-down" onclick="expandContent(this)"></i>
+        </div>
+        <div class="content hide">
+            <div class="contentLeft">
+                <div class="infoTab">
+                    <h1>Personal Information</h1>
+                    <div>
+                        <label for="firstname">First Name</label>
+                        <p>${application['first_name']}</p>
+                    </div>
+                    <div>
+                        <label for="lastname">Last Name</label>
+                        <p>${application['last_name']}</p>
+                    </div>
+                    <div>
+                        <label for="email">E Mail</label>
+                        <p>${application['email']}</p>
+                    </div>
+                    <div>
+                        <label for="phone">Phone</label>
+                        <p>${application['phone']}</p>
+                    </div>
+                </div>
+                <div class="infoTab">
+                    <h1>Covid Situation</h1>
+                    <div class="col">
+                        <label>how would you prefer to work?</label>
+                        <div class="round">
+                            <span id="from_office_${index}"></span>
+                            <p>From Sairme Office</p>
+                        </div>
+                        <div class="round">
+                            <span id="from_home_${index}"></span>
+                            <p>From Home</p>
+                        </div>
+                        <div class="round">
+                            <span id="hybrid_${index}"></span>
+                            <p>Hybrid</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="lastname">Did you have covid 19?</label>
+                        <div class="round">
+                            <span id="covidYes_${index}"></span>
+                            <p>Yes</p>
+                        </div>
+                        <div class="round">
+                            <span id="covidNo_${index}"></span>
+                            <p>No</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label>When did you have covid 19?</label>
+                        <input type="text" value='${application['had_covid_at']}' name="covid" id="covidDate" disabled></input>
+                    </div>
+                    <div class="col">
+                        <label>Have you been vaccinated?</label>
+                        <div class="round">
+                            <span id="vaccinatedYes_${index}"></span>
+                            <p>Yes</p>
+                        </div>
+                        <div class="round">
+                            <span id="vaccinatedNo_${index}"></span>
+                            <p>No</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label>When did you get covid vaccine?</label>
+                        <input type="text" value='${application['vaccinated_at']}' name="vaccine" id="vaccineDate" disabled></input>
+                    </div>
+                </div>
+            </div>
+            <div class="contentRight">
+                <div class="infoTab">
+                    <h1>Skillset</h1>
+                    <div id='skills-${index}'>
+                    
+                    </div>
+                    
+                </div>
+                <div class="infoTab">
+                    <h1>Insigts</h1>
+                    <div class="col">
+                        <label>Would you attend Devtalks and maybe also organize your own?</label>
+                        <div class="round">
+                            <span id="devtalksYes_${index}"></span>
+                            <p>Yes</p>
+                        </div>
+                        <div class="round">
+                            <span id="devtalksNo_${index}"></span>
+                            <p>No</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label>What would you speak about at Devtalk?</label>
+                        <textarea id="" cols="30" rows="10" placeholder="${application['devtalk_topic']}" disabled></textarea>
+                    </div>
+                    <div class="col">
+                        <label>Tell us somthing special</label>
+                        <textarea id="" cols="30" rows="10" placeholder="${application['something_special']}" disabled style="min-height: 70px;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`);
+
+    preferToWorkCheck(index,application);
+    hadCovid(index,application);
+    vaccinated(index,application);
+    willOrganizeDevtalk(index,application);
+
+    $.each(application.skills, function(i,skill){
+        let lang = getSkillById(skill.id);
+        $(`#skills-${index}`).append(`
+            <div>
+                <label>${lang}</label>
+                <p>Years of experience: ${skill.experience}</p>
+            </div>
+        `)
+    });
+}
+
+function loadApplications(obj){
+    $.each(obj, function(i, application){
+        drawApplicationForm(i,application);
+    });
+}
 
 
 $( document ).ready(function() {
+    getApplications();
     appendSkills();
 });

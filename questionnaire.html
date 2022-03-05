@@ -16,7 +16,7 @@
 <body>
     <div class="container">
         <div class="questions">
-            <div class="formstage hide" id="stage1" tab="1">
+            <div class="formstage" id="stage1" tab="1">
                 <h1>Hey, Rocketeer, what are your coordinates?</h1>
                 <input type="text" placeholder="First Name" id="firstname" name="firstname">
                 <small id="firstnameErr"></small>
@@ -27,7 +27,7 @@
                 <input type="tel" placeholder="+995 5__ __ __ __" id="number" name="number" pattern="[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}[0-9]{2}">
                 <small id="numberErr"></small>
             </div>
-            <div class="formstage" id="stage2" tab="2">
+            <div class="formstage hide" id="stage2" tab="2">
                 <h1>Tell us about your skills</h1>
                 <select name="skills" id="skills">
                     
@@ -46,28 +46,28 @@
                     <section>
                         <h3>how would you prefer to work?</h3>
                         <div class="round">
-                            <span onclick="checkSpan(this)" id="fromOffice"></span>
-                            <p>From Sairme Office</p>
+                            <input type="radio" id="fromOffice" name="work_prefer" value="Office">
+                            <label for="fromOffice">From Sairme Office</label>    
                         </div>
                         <div class="round">
-                            <span onclick="checkSpan(this)" id="fromHome"></span>
-                            <p>From Home</p>
+                            <input type="radio" id="fromHome" name="work_prefer" value="Home">
+                            <label for="fromHome">From Home</label>
                         </div>
                         <div class="round">
-                            <span onclick="checkSpan(this)" id="hybrid"></span>
-                            <p>Hybrid</p>
+                            <input type="radio" id="hybrid" name="work_prefer" value="Hybrid">
+                            <label for="hybrid">Hybrid</label>
                         </div>
                     </section>
                     
                     <section>
                         <h3>Did you contact covid 19? :(</h3>
                         <div class="round">
-                            <span onclick="checkSpan(this)" id="covidYes"></span>
-                            <p>Yes</p>
+                            <input type="radio" id="covidYes" name="covid_contact" value="covidYes">
+                            <label for="covidYes">Yes</label>
                         </div>
                         <div class="round">
-                            <span onclick="checkSpan(this)" id="covidNo"></span>
-                            <p>No</p>
+                            <input type="radio" id="covidNo" name="covid_contact" value="covidNo">
+                            <label for="covidNo">No</label>
                         </div>
                         <div id="contactCovid">
                             <h2>When ?</h2>
@@ -78,14 +78,14 @@
                     <section>
                         <h3>Have you been vaccinated?</h3>
                         <div class="round">
-                            <span onclick="checkSpan(this)" id="vaccinatedYes"></span>
-                            <p>Yes</p>
+                            <input type="radio" id="vaccineYes" name="covid_vaccine" value="vaccineYes">
+                            <label for="vaccineYes">Yes</label>
                         </div>
                         <div class="round">
-                            <span onclick="checkSpan(this)" id="vaccinatedNo"></span>
-                            <p>No</p>
+                            <input type="radio" id="vaccineNo" name="covid_vaccine" value="vaccineNo">
+                            <label for="vaccineNo">No</label>
                         </div>
-                        <div id="vacinated">
+                        <div id="vaccinated">
                             <h2>When did you get your last covid vaccine?</h2>
                             <input type="date" placeholder="Data" name="covid" id="vaccineDate">
                         </div>
@@ -97,12 +97,12 @@
                 <section>
                     <h3>Would you attend Devtalks and maybe also organize your own?</h3>
                     <div class="round">
-                        <span onclick="checkSpan(this)" id="devtalksYes"></span>
-                        <p>Yes</p>
+                        <input type="radio" id="devTalksYes" name="dev_talks" value="Yes">
+                        <label for="devTalksYes">Yes</label>
                     </div>
                     <div class="round">
-                        <span onclick="checkSpan(this)" id="devtalksNo"></span>
-                        <p>No</p>
+                        <input type="radio" id="devTalksNo" name="dev_talks" value="No">
+                        <label for="devTalksNo">No</label>
                     </div>
                 </section>
                 <section>

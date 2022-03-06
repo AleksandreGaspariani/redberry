@@ -82,19 +82,19 @@ function phoneValidate(phone){
     }
 }
 
+
 function emailValidate(email){
     if (email != undefined) {
         let validemail = $(`#${email}`).val();
-        validemail = validemail.split('');
-
+        let pattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    
         $(`#${email}`).focusin(()=>{
             $(`#${email}`).css('border','1px solid #8d8d8d');
             $(`#${email}`).focusout(()=>{ 
                 $(`#${email}Err`).text('');
             });
         });
-
-        if (validemail.length != 0 && !validemail.includes('@',0)) {
+        if (validemail.length != 0 && !validemail.match(pattern)) {
             redBorder(email);
             $(`#${email}Err`).text(`* Wrong `+$(`#${email}`).attr("placeholder")+``);
         }else if (validemail.length === 0) {
@@ -286,6 +286,7 @@ function getSkillById(id){
 }
 
 // check radio buttons if it's true or false.
+
 function hadCovid(index,application){
     if (application['had_covid']) {
         $(`#covidYes_${index}`).toggleClass('checkedSpan');

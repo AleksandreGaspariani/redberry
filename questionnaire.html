@@ -28,17 +28,19 @@
                 <small id="numberErr"></small>
             </div>
             <div class="formstage hide" id="stage2" tab="2">
-                <h1>Tell us about your skills</h1>
-                <select name="skills" id="skills">
+                    <h1>Tell us about your skills</h1>
+                    <small id="existSkillErr"></small>
+                    <select name="skills" id="skills">
+                        
+                    </select>
+                    <input type="text" placeholder="Experience Duration in Years" id="experienceYear">
+                    <small id="experienceErr"></small>
+                    <div style="position: relative;">
+                        <button id="addSkill">Add Programming Language</button>
+                    </div>
+                    <section class="skilllist">
                     
-                </select>
-                <input type="text" placeholder="Experience Duration in Years" id="experienceYear">
-                <div style="position: relative;">
-                    <button id="addSkill">Add Programming Language</button>
-                </div>
-                <section class="skilllist">
-                
-                </section>
+                    </section>
             </div>
             <div class="formstage hide" id="stage3" tab="3">
                 <h1>Covid Stuff</h1>
@@ -46,7 +48,7 @@
                     <section>
                         <h3>how would you prefer to work?</h3>
                         <div class="round">
-                            <input type="radio" id="fromOffice" name="work_prefer" value="Office">
+                            <input type="radio" id="fromOffice" name="work_prefer" value="Office" checked>
                             <label for="fromOffice">From Sairme Office</label>    
                         </div>
                         <div class="round">
@@ -66,10 +68,10 @@
                             <label for="covidYes">Yes</label>
                         </div>
                         <div class="round">
-                            <input type="radio" id="covidNo" name="covid_contact" value="covidNo">
+                            <input type="radio" id="covidNo" name="covid_contact" value="covidNo" checked>
                             <label for="covidNo">No</label>
                         </div>
-                        <div id="contactCovid">
+                        <div id="contactCovid" class="">
                             <h2>When ?</h2>
                             <input type="date" placeholder="Date" name="covid" id="covidDate">
                         </div>
@@ -82,14 +84,16 @@
                             <label for="vaccineYes">Yes</label>
                         </div>
                         <div class="round">
-                            <input type="radio" id="vaccineNo" name="covid_vaccine" value="vaccineNo">
+                            <input type="radio" id="vaccineNo" name="covid_vaccine" value="vaccineNo" checked>
                             <label for="vaccineNo">No</label>
                         </div>
-                        <div id="vaccinated">
+                        <div id="vaccinated" class="">
                             <h2>When did you get your last covid vaccine?</h2>
                             <input type="date" placeholder="Data" name="covid" id="vaccineDate">
                         </div>
                     </section>
+
+                    <button id="testbtn">Click here</button>
                 </div>
             </div>
             <div class="formstage hide" id="stage4" tab="4">

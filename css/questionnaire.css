@@ -205,7 +205,6 @@ body {
 
 #contactCovid,
 #vaccinated {
-    display: none;
     margin-top: 2rem;
 }
 
@@ -216,7 +215,7 @@ body {
 }
 
 #contactCovid input,
-#vacinated input {
+#vaccinated input {
     margin-top: 1rem;
     font-family: 'Montserrat';
     font-weight: 800;

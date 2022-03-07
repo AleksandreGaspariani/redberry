@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="icon" href="imgs/logo.png">
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/questionnaire.css">
 
@@ -24,7 +24,7 @@
                 <small id="lastnameErr"></small>
                 <input type="email" placeholder="E Mail" id="email" name="email">
                 <small id="emailErr"></small>
-                <input type="tel" placeholder="+995 5__ __ __ __" id="number" name="number" pattern="[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}[0-9]{2}">
+                <input type="tel" placeholder="+995 5__ __ __ __" id="number" name="number">
                 <small id="numberErr"></small>
             </div>
             <div class="formstage hide" id="stage2" tab="2">
@@ -71,9 +71,10 @@
                             <input type="radio" id="covidNo" name="covid_contact" value="covidNo" checked>
                             <label for="covidNo">No</label>
                         </div>
-                        <div id="contactCovid" class="">
+                        <div id="contactCovid" class="hide">
                             <h2>When ?</h2>
                             <input type="date" placeholder="Date" name="covid" id="covidDate">
+                            <small id="covidDateErr"></small>
                         </div>
                     </section>
 
@@ -87,9 +88,10 @@
                             <input type="radio" id="vaccineNo" name="covid_vaccine" value="vaccineNo" checked>
                             <label for="vaccineNo">No</label>
                         </div>
-                        <div id="vaccinated" class="">
+                        <div id="vaccinated" class="hide">
                             <h2>When did you get your last covid vaccine?</h2>
                             <input type="date" placeholder="Data" name="covid" id="vaccineDate">
+                            <small id="vaccineDateErr"></small>
                         </div>
                     </section>
 
@@ -105,17 +107,19 @@
                         <label for="devTalksYes">Yes</label>
                     </div>
                     <div class="round">
-                        <input type="radio" id="devTalksNo" name="dev_talks" value="No">
+                        <input type="radio" id="devTalksNo" name="dev_talks" value="No" checked>
                         <label for="devTalksNo">No</label>
                     </div>
                 </section>
-                <section>
+                <section id="devTalkTextarea" class="hide">
                     <h3>What would you speak about at Devtalk?</h3>
-                    <textarea name="devtalk" id="devtalks" cols="30" rows="10">I would...</textarea>
+                    <textarea name="devtalk" id="devtalks" cols="30" rows="10" placeholder="I would..."></textarea>
+                    <span id="devtalkErr"></span>
                 </section>
                 <section>
                     <h3>Tell us something special</h3>
-                    <textarea name="devtalk" id="devtalks" cols="30" rows="10">I...</textarea>
+                    <textarea name="something_special" id="somethingSpecial" cols="30" rows="10" placeholder="I..."></textarea>
+                    <span id="somethingSpecialErr"></span>
                 </section>
             </div>
 

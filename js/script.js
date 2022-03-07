@@ -61,19 +61,6 @@ function isValidFirstForm(firstname, lastname, email, phone){
     return true;
     
 }
-function numbval(number) {
-    let arr = number;
-    let valArr = ['+','9','9','5'];
-    let i = 0;
-    arr.forEach(element=> {
-        if (element == valArr[i]) {
-            console.log(element);
-        }else{
-            console.log('nope');
-        }
-    })
-
-}
 
 function phoneValidate(phone){
     if (phone != undefined) {
@@ -95,7 +82,7 @@ function phoneValidate(phone){
             redBorder(phone);
             $(`#${phone}Err`).text(`* `+$(`#${phone}`).attr("name")+` is required`);
         }else{
-            return true;
+            return number;
         }
     }
 }
@@ -119,7 +106,7 @@ function emailValidate(email){
             redBorder(email);
             $(`#${email}Err`).text(`* `+$(`#${email}`).attr("placeholder")+` is required`);
         }else{
-            return true;
+            return validemail;
         }
     }
 }
@@ -143,9 +130,8 @@ function textValidate(text){
             redBorder(text);
             $(`#${text}Err`).text(`* `+$(`#${text}`).attr("placeholder")+` is required`);
         }else{
-            return true;
+            return valid;
         }
-        
     }
 }
 // Covid staff 
@@ -153,8 +139,12 @@ function textValidate(text){
     function covidStaffGetData(){
         let stage3 = []; // contains checked radio button values.
         let inputs = $('#stage3 section div.round').children('input');
-        let vacinated_at;
+        let prefer_to_work = '';
+        
+        let had_covid;
+        let vaccinated;
         let had_covid_at;
+        let vacinated_at;
 
         $.each(inputs, function(i,text){
             if ($(text).is(":checked")) {
@@ -162,10 +152,97 @@ function textValidate(text){
             }
         });
         
-        if ($('#covidDate').val() > 0) {
-            console.log($('#covidDate').val());
-        }
+        prefer_to_work = stage3[0];
 
+        $('#covidYes').on('click',()=>{
+            had_covid = true;
+            $('#contactCovid').removeClass('hide');
+            $('#covidNo').on('click',()=>{
+                had_covid = false;
+                $('#contactCovid').addClass('hide');
+            });
+        });
+    
+        $('#covidDate').on('focusout',()=>{
+            if (had_covid) {
+                had_covid_at = $('#covidDate').val();
+                console.log(had_covid_at);
+            }
+            if($('#covidDate').val().length < 2){
+                redBorder('covidDate');
+                $('#covidDateErr').text('* Date is required.');
+            }else{
+                $(`#covidDate`).css('border','1px solid #8d8d8d');
+                $('#covidDateErr').text('');
+            }
+        });
+    
+        $('#vaccineYes').on('click',()=>{
+            vaccinated = true;
+            $('#vaccinated').removeClass('hide');
+            $('#vaccineNo').on('click',()=>{
+                vaccinated = false;
+                $('#vaccinated').addClass('hide');
+            });
+        });
+    
+        $('#vaccineDate').on('focusout',()=>{
+            if (vaccinated) {
+                vacinated_at = $('#vaccineDate').val();
+                console.log(vacinated_at);
+            }
+            if($('#vaccineDate').val().length < 2){
+                redBorder('vaccineDate');
+                $('#vaccineDateErr').text('* Date is required.');
+            }else{
+                $(`#vaccineDate`).css('border','1px solid #8d8d8d');
+                $('#vaccineDateErr').text('');
+            }
+        });
+    
+        return stage3;
+    }
+
+    
+// Dev talks
+
+    function getDevTalkData() {
+        let willOrganizeDevtalk;
+        let devTalkTopic;
+        let somethingSpecial;
+        $('#devTalksYes').on('click',()=>{
+            willOrganizeDevtalk = true;
+            $('#devTalkTextarea').removeClass('hide');
+            $('#devTalksNo').on('click',()=>{
+                willOrganizeDevtalk = false;
+                $('#devTalkTextarea').addClass('hide');
+            });
+        });
+
+        
+        $('#devtalks').on('focusout',()=>{
+            if ($('#devtalks').val().length > 0) {
+                devTalkTopic = $('#devtalks').val();
+                console.log(devTalkTopic);
+                $('#devtalkErr').text('');
+                $(`#devtalks`).css('border','1px solid #8d8d8d');
+            }else{
+                $('#devtalkErr').text('* fill this field.');
+                redBorder('devtalks');
+            }
+        });
+
+        $('#somethingSpecial').on('focusout',()=>{
+            if ($('#somethingSpecial').val().length > 0) {
+                somethingSpecial = $('#somethingSpecial').val();
+                console.log(somethingSpecial);
+                $('#somethingSpecialErr').text('');
+                $(`#somethingSpecial`).css('border','1px solid #8d8d8d');
+            }else{
+                $('#somethingSpecialErr').text('* fill this field.');
+                redBorder('somethingSpecial');
+            }
+        });
     }
 
 // change form w/o refresh
@@ -178,7 +255,8 @@ function changeIndex(element){
     $('#stage'+activeIndex).addClass('hide');
     $('#stage'+index).removeClass('hide');
     stageDescriptions();
-    covidStaffGetData();
+    covidStaffGetData(); 
+    getDevTalkData();
 }
 
 
@@ -188,7 +266,6 @@ function checkIndex(element){
     }
     return true;
 }
-
 
 
 function redBorder(text){

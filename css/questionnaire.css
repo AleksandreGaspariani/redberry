@@ -226,7 +226,23 @@ body {
     border: 1px solid #8d8d8d;
     text-align: left;
 }
+#contactCovid small,
+#vaccinated small{
+    width: 455px;
+    color: #FE3B1F;
+    font-weight: 900;
+    text-align: left;
+    padding-left: 2rem;
+}
 
+#somethingSpecialErr,
+#devtalkErr {
+    width: 455px;
+    color: #FE3B1F;
+    font-weight: 900;
+    text-align: left;
+    padding-left: 2rem;
+}
 /* fourth form */
 
 #stage4 section {

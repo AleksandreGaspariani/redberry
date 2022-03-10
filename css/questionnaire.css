@@ -279,11 +279,22 @@ body {
     justify-content: center;
     align-items: center;
 }
-#submitForm a {
+#submitForm div a {
     color: white;
     margin-top: 2rem;
     text-decoration: underline;
     cursor: pointer;
+}
+#submitAppForm{
+    margin: 0;
+    padding: 0;
+}
+#formBtns{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 .submitBtn {
     font-family: 'Montserrat';
@@ -294,4 +305,14 @@ body {
     border-radius: 50px;
     background: #FE3B1F;
     border: none;
+}
+
+#thnkForJoining > h1 {
+    font-family: 'Rowdies';
+    font-weight: 400;
+    text-align: center;
+    color: #FE3B1F;
+    font-size: 56px;
+    word-wrap: break-word;
+    margin-bottom: 2rem;
 }

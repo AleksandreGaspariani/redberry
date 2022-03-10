@@ -1,4 +1,14 @@
 
+function thnkForJoining(){
+    $('#thnkForJoining').removeClass('hide');
+    $('#formBtns').addClass('hide');
+    const changePage = setTimeout(changeHref,3000);
+}
+
+function changeHref (){
+    window.location.replace('index.html');
+}
+
 //descriptions and headers for each form.
 function stageDescriptions(){
     let stageinfo = [
@@ -42,6 +52,40 @@ function colorizeButtons(){
         $(`[data-index=${btn}]`).addClass('checked');
     });
 }
+
+function sendPostRequest(){
+    let myData = getAllDataForSubmit();
+    console.log(myData);
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        url: 'https://bootcamp-2022.devtest.ge/api/application',
+        data: JSON.stringify(myData)
+    })
+}
+$('#submitApplication').on('click',()=>{
+    thnkForJoining();
+    sendPostRequest();
+});
+
+
+// data format 
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
 // get all data for submit post.
 
 
@@ -58,46 +102,47 @@ function getAllDataForSubmit(){
     let vaccinated = hadCovid.vaccine;
     hadCovid = hadCovid.covid;
     let had_covid_at = $(`#covidDate`).val();
+    had_covid_at = Date(had_covid_at);
+    had_covid_at = formatDate(had_covid_at);
     let vaccinated_at = $('#vaccineDate').val()
-
+    vaccinated_at = Date(vaccinated_at);
+    vaccinated_at = formatDate(vaccinated_at);
     let devtalkStaff = devTalkRadionsOnClick();
     let devtalkTopic = devtalkStaff.devtalk_topic;
     let somethingSpecial = devtalkStaff.something_special;
     devtalkStaff = devtalkStaff.devtalk;
 
-    let data = [
-        {
-            'token' : uniq_token,
-            'first_name' : firstname,
-            'last_name' : lastname,
-            'email' : email,
-            'phone' : number,
-            'skills' : [],
-            'work_preference': workPreference,
-            'had_covid' : hadCovid,
-            'had_covid_at' : had_covid_at,
-            'vaccinated' : vaccinated,
-            'vaccinated_at' : vaccinated_at,
-            'will_organize_devtalk' : devtalkStaff,
-            'devtalk_topic' : devtalkTopic,
-            'sometehing_special' : somethingSpecial
-        }
-    ]
+    let data = {
+        "token" : uniq_token,
+        "first_name" : firstname,
+        "last_name" : lastname,
+        "email" : email,
+        "phone" : number,
+        "skills" : [],
+        "work_preference": workPreference,
+        "had_covid" : hadCovid,
+        "had_covid_at" : had_covid_at,
+        "vaccinated" : vaccinated,
+        "vaccinated_at" : vaccinated_at,
+        "will_organize_devtalk" : devtalkStaff,
+        "devtalk_topic" : devtalkTopic,
+        "something_special" : somethingSpecial
+    }
     
     for (let index = 0; index < skillObj.length; index++){
         let getIdOfSkill = $(skillObj[index]).attr('name');
         getIdOfSkill = getIdOfSkill.split('-');
         getIdOfSkill = getIdOfSkill[1];
 
+        getIdOfSkill = parseInt(getIdOfSkill, 10);
 
         let getExperience = $(skillObj[index]).find('strong').text();
+        getExperience = parseInt(getExperience, 10);
 
         let skillArr = {"id":getIdOfSkill,"experience":getExperience};
-        data[0].skills.push(skillArr);
+        data.skills.push(skillArr);
     }
     
-
-    console.log(data);
     return data;
 }
 
@@ -214,11 +259,11 @@ function phoneValidate(phone){
         });
 
         let number = $(`#${phone}`).val(); 
-        let pattern = /^\(?([+]{1}[9]{1}[9]{1}[5]{1})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{2})[-. ]([0-9]{2})[-. ]([0-9]{2})[-. ]?$/;
-        
-        if(number.length > 0 && !number.match(pattern)){
+        // let pattern = /^\(?([+]{1}[9]{1}[9]{1}[5]{1})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{2})[-. ]([0-9]{2})[-. ]([0-9]{2})[-. ]?$/;
+        let newPattern = /^\(?([+]{1}[9]{1}[9]{1}[5]{1}[0-9]{3}[0-9]{2}[0-9]{2}[0-9]{2})\)?$/;
+        if(number.length > 0 && !number.match(newPattern)){
             redBorder(phone);
-            $(`#${phone}Err`).text('* wrong number format (+995 5__ __ __ __)');
+            $(`#${phone}Err`).text('* wrong number format (+995 5__ __ __ __), w/o spaces between');
         }else if(number.length === 0){
             redBorder(phone);
             $(`#${phone}Err`).text(`* `+$(`#${phone}`).attr("name")+` is required`);
@@ -420,7 +465,7 @@ let vacinated_at = '';
             stage4 = [false];
             willOrganize = false;
             willOrganizeDevtalk = true;
-            devtalkTopic =  '';
+            devtalkTopic =  'I wouldn`t';
             $('#devTalkTextarea').addClass('hide');
         }
 
@@ -438,7 +483,6 @@ let vacinated_at = '';
             somethingSpeial = true;
             something_special = $('#somethingSpecial').val();
         }
-        console.log(devtalkTopic);
         if (somethingSpeial && willOrganizeDevtalk) {
             if (stage4.length > 0) {
                 return {

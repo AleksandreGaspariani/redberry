@@ -101,11 +101,7 @@ function getAllDataForSubmit(){
     let vaccinated = hadCovid.vaccine;
     hadCovid = hadCovid.covid;
     let had_covid_at = $(`#covidDate`).val();
-    had_covid_at = Date(had_covid_at);
-    had_covid_at = formatDate(had_covid_at);
-    let vaccinated_at = $('#vaccineDate').val()
-    vaccinated_at = Date(vaccinated_at);
-    vaccinated_at = formatDate(vaccinated_at);
+    let vaccinated_at = $('#vaccineDate').val();
     let devtalkStaff = devTalkRadionsOnClick();
     let devtalkTopic = devtalkStaff.devtalk_topic;
     let somethingSpecial = devtalkStaff.something_special;

@@ -33,36 +33,119 @@ function stageDescriptions(){
         }
     }
 }
+// Colorize valid buttons
+
+function colorizeButtons(){
+    $('.fa-circle').removeClass('checked');
+
+    circles.forEach(btn => {
+        console.log(btn);
+        $(`[data-index=${btn}]`).addClass('checked');
+    });
+}
 
 // validation
+$('[data-index=5]').on('click',()=>{
+    getDevTalkData();
+    if (getDevTalkData()) {
+        $('.info').addClass('hide');
+        $('.questions').addClass('hide');
+        $('#submitForm').removeClass('hide');
+    }else {
+        return;
+    }
+});
+
+$('[data-index=4]').on('click',()=>{
+    covidStaffGetData();
+});
+
+$('[data-index=3]').on('click',()=>{
+    isEmptySkills();
+});
 
 $('#stages .fa-circle').click(function() {
     var index = $(this).index();
+    var current = $('#stages').find('.active').attr('data-index');
+    current = parseInt(current, 10);
+    isValidFirstForm('firstname','lastname','email','number');
+    colorizeButtons();
+    let maxValid = Math.max(...circles);
+    maxValid = parseInt(maxValid, 10) + 1;
     
-    if (isValidFirstForm('firstname','lastname','email','number')){
-        if(checkIndex(this)){
-            changeIndex(this); 
-        }
+    if (index < current) {
+        changeIndex(this);
     }
-
+    if(index > current && circles.includes(current)){
+        if(circles.includes(index)){
+            changeIndex(this);
+            return;
+        }
+        if(index == maxValid){
+            changeIndex(this);
+            return;
+        }
+        moveToNextIndex(current);
+    }
     
+    if(index == current){
+        return false;
+    }
 });
 
-function isValidFirstForm(firstname, lastname, email, phone){
-    
-    textValidate(firstname);
-    textValidate(lastname);
-    emailValidate(email);
-    phoneValidate(phone);
+// remove circle 
 
-    // if (textValidate(firstname) && textValidate(lastname) && emailValidate(email) && phoneValidate(phone)) {
-    //     return true;
-    // }
-    return true;
+function removeCircle(index){
+
+    let arr = circles;
+    circles = [];
+    arr.forEach(element => {
+      if (element != index) {
+        circles.push(element);
+      }
+    });
+}
+
+function removeSkillFromArr(elements){
+    let skill = $(elements).parent().parent().attr('id');
     
+    let arr = skillContainer;
+    skillContainer = [];
+    arr.forEach(element => {
+      if (element != skill) {
+        skillContainer.push(element);
+      }
+    });
+}
+
+// move to next index.
+
+function moveToNextIndex(curIndex){
+    let nextIndex = curIndex + 1;
+    $('#stages .active').removeClass('active');
+    $('[data-index="'+nextIndex+'"]').addClass('active');
+    $('#stage'+curIndex).addClass('hide');
+    $('#stage'+nextIndex).removeClass('hide');
+}
+
+let circles = [];
+
+function isValidFirstForm(firstname, lastname, email, phone){
+    let validFirstForm = [textValidate(firstname),textValidate(lastname),emailValidate(email),phoneValidate(phone)];
+
+    if (validFirstForm.includes(false)) {
+        removeCircle(1);
+        return false;
+    }else{
+        if (!circles.includes(1)) {
+            circles.push(1);
+        }
+        return true;
+    }
 }
 
 function phoneValidate(phone){
+    let isValid = false;
     if (phone != undefined) {
 
         $(`#${phone}`).focusin(()=>{
@@ -82,13 +165,15 @@ function phoneValidate(phone){
             redBorder(phone);
             $(`#${phone}Err`).text(`* `+$(`#${phone}`).attr("name")+` is required`);
         }else{
-            return number;
+            isValid = true;
         }
     }
+    return isValid;
 }
 
 
 function emailValidate(email){
+    let isValid = false;
     if (email != undefined) {
         let validemail = $(`#${email}`).val();
         let pattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -106,13 +191,16 @@ function emailValidate(email){
             redBorder(email);
             $(`#${email}Err`).text(`* `+$(`#${email}`).attr("placeholder")+` is required`);
         }else{
-            return validemail;
+            isValid = true;
         }
     }
+    return isValid;
 }
 
 function textValidate(text){
+    let isValid = false;
     if (text != undefined) {
+        
         var valid = $(`#${text}`).val();
 
         $(`#${text}`).focusin(()=>{
@@ -130,119 +218,182 @@ function textValidate(text){
             redBorder(text);
             $(`#${text}Err`).text(`* `+$(`#${text}`).attr("placeholder")+` is required`);
         }else{
-            return valid;
+            isValid = true;
         }
     }
+    return isValid;
 }
 // Covid staff 
+let had_covid = false;
+let vaccinated = false;
+let had_covid_at = '';
+let vacinated_at = '';
 
-    function covidStaffGetData(){
-        let stage3 = []; // contains checked radio button values.
+// 
+    function radioButtonsOnClick(){
+        let covidStaff = false;
+        let vaccineStaff = false;
         let inputs = $('#stage3 section div.round').children('input');
-        let prefer_to_work = '';
-        
-        let had_covid;
-        let vaccinated;
-        let had_covid_at;
-        let vacinated_at;
-
+        let stage3 = [];
         $.each(inputs, function(i,text){
             if ($(text).is(":checked")) {
                 stage3.push($(text).attr('value'));
             }
         });
-        
-        prefer_to_work = stage3[0];
 
-        $('#covidYes').on('click',()=>{
-            had_covid = true;
+        // had covid 
+        if (stage3.includes('covidYes')) {
             $('#contactCovid').removeClass('hide');
-            $('#covidNo').on('click',()=>{
-                had_covid = false;
-                $('#contactCovid').addClass('hide');
+            $('#covidDate').on('focusout',()=>{
+                let had_covid_at = $('#covidDate').val();
+                if(had_covid_at.length < 2){
+                    redBorder('covidDate');
+                    $('#covidDateErr').text('* Date is required.');
+                }else{
+                    $(`#covidDate`).css('border','1px solid #8d8d8d');
+                    $('#covidDateErr').text('');
+                }
             });
-        });
-    
-        $('#covidDate').on('focusout',()=>{
-            if (had_covid) {
-                had_covid_at = $('#covidDate').val();
-                console.log(had_covid_at);
+            if ($('#covidDate').val().length > 2) {
+                covidStaff = true;
             }
-            if($('#covidDate').val().length < 2){
-                redBorder('covidDate');
-                $('#covidDateErr').text('* Date is required.');
-            }else{
-                $(`#covidDate`).css('border','1px solid #8d8d8d');
-                $('#covidDateErr').text('');
-            }
-        });
-    
-        $('#vaccineYes').on('click',()=>{
-            vaccinated = true;
+        }else if(stage3.includes('covidNo')){
+            $('#contactCovid').addClass('hide');
+            covidStaff = true;
+        }
+        // vaccinated
+        if (stage3.includes('vaccineYes')) {
             $('#vaccinated').removeClass('hide');
-            $('#vaccineNo').on('click',()=>{
-                vaccinated = false;
-                $('#vaccinated').addClass('hide');
+
+            $('#vaccineDate').on('focusout',()=>{
+                let vaccinated_at = $('#vaccineDate').val();
+                if(vaccinated_at.length < 2){
+                    redBorder('vaccineDate');
+                    $('#vaccineDateErr').text('* Date is required.');
+                }else{
+                    $(`#vaccineDate`).css('border','1px solid #8d8d8d');
+                    $('#vaccineDateErr').text('');
+                }
             });
-        });
-    
-        $('#vaccineDate').on('focusout',()=>{
-            if (vaccinated) {
-                vacinated_at = $('#vaccineDate').val();
-                console.log(vacinated_at);
+            if ($('#vaccineDate').val().length > 2) {
+                vaccineStaff = true;
             }
-            if($('#vaccineDate').val().length < 2){
-                redBorder('vaccineDate');
-                $('#vaccineDateErr').text('* Date is required.');
-            }else{
-                $(`#vaccineDate`).css('border','1px solid #8d8d8d');
-                $('#vaccineDateErr').text('');
+        }else if(stage3.includes('vaccineNo')){
+            $('#vaccinated').addClass('hide');
+            vaccineStaff = true;
+        }
+
+
+        if (vaccineStaff && covidStaff) {
+            if (stage3.length == 3) {
+                return {
+                    'isValid' : true,
+                    'data' : stage3
+                };
+            }else return {
+                'isValid' : false
             }
-        });
-    
-        return stage3;
+        }else return {
+            'isValid' : false
+        };
+    }
+// 
+
+    function covidStaffGetData(){
+        
+        let radioBtns = radioButtonsOnClick();
+        
+        if(radioBtns.isValid){
+            circles.push(3);
+        }else{
+            removeCircle(3);
+        }
+
+        
     }
 
     
 // Dev talks
-
-    function getDevTalkData() {
-        let willOrganizeDevtalk;
-        let devTalkTopic;
-        let somethingSpecial;
-        $('#devTalksYes').on('click',()=>{
-            willOrganizeDevtalk = true;
-            $('#devTalkTextarea').removeClass('hide');
-            $('#devTalksNo').on('click',()=>{
-                willOrganizeDevtalk = false;
-                $('#devTalkTextarea').addClass('hide');
-            });
-        });
-
-        
-        $('#devtalks').on('focusout',()=>{
-            if ($('#devtalks').val().length > 0) {
-                devTalkTopic = $('#devtalks').val();
-                console.log(devTalkTopic);
-                $('#devtalkErr').text('');
-                $(`#devtalks`).css('border','1px solid #8d8d8d');
-            }else{
-                $('#devtalkErr').text('* fill this field.');
-                redBorder('devtalks');
+    function devTalkRadionsOnClick(){
+        let willOrganizeDevtalk = false;
+        let somethingSpeial = false;
+        let stage4 = [];
+        let inputs = $('#stage4 section div.round').children('input');
+        // devtalks radio buttons
+        $.each(inputs, function(i,text){
+            if ($(text).is(":checked")) {
+                stage4.push($(text).attr('value'));
             }
         });
 
+        // devtalks
+        if (stage4.includes('Yes')) {
+            stage4 = [true];
+            
+            $('#devTalkTextarea').removeClass('hide');
+            $('#devtalks').on('focusout',()=>{
+                if ($('#devtalks').val().length > 0) {
+                    $('#devtalkErr').text('');
+                    $(`#devtalks`).css('border','1px solid #8d8d8d');
+                }else{
+                    $('#devtalkErr').text('* fill this field.');
+                    redBorder('devtalks');
+                }
+            });
+            if ($('#devtalks').val().length > 0) {
+                willOrganizeDevtalk = true;
+            }
+        }else if (stage4.includes('No')) {
+            stage4 = [false];
+            willOrganizeDevtalk = true;
+            $('#devTalkTextarea').addClass('hide');
+        }
+
+        // something special
         $('#somethingSpecial').on('focusout',()=>{
             if ($('#somethingSpecial').val().length > 0) {
-                somethingSpecial = $('#somethingSpecial').val();
-                console.log(somethingSpecial);
                 $('#somethingSpecialErr').text('');
                 $(`#somethingSpecial`).css('border','1px solid #8d8d8d');
             }else{
                 $('#somethingSpecialErr').text('* fill this field.');
                 redBorder('somethingSpecial');
-            }
+            }   
         });
+        if ($('#somethingSpecial').val().length > 0) {
+            somethingSpeial = true;
+        }
+        if (somethingSpeial && willOrganizeDevtalk) {
+            if (stage4.length > 0) {
+                return {
+                    'isValid' : true,
+                    'data' : stage4
+                }
+            }else{
+                return {
+                    'isValid' : false,
+                    'data' : stage4
+                }
+            }
+        }else{
+            return {
+                'isValid' : false,
+                'data' : stage4
+            }
+        }
+
+    }
+
+    function getDevTalkData() {
+
+        let devTalkStaff = devTalkRadionsOnClick();
+        if (devTalkStaff.isValid) {
+            circles.push(4);
+            return true;
+        }else{
+            removeCircle(4);
+            return false;
+        }
+        
     }
 
 // change form w/o refresh
@@ -255,8 +406,7 @@ function changeIndex(element){
     $('#stage'+activeIndex).addClass('hide');
     $('#stage'+index).removeClass('hide');
     stageDescriptions();
-    covidStaffGetData(); 
-    getDevTalkData();
+    
 }
 
 
@@ -273,7 +423,9 @@ function redBorder(text){
 }
 
 function removeSkill(element){
+    removeSkillFromArr(element);
     $(element).closest('section').remove();
+
 }
 
 // check single application
@@ -290,6 +442,9 @@ function goBack(){
     $('#submitForm').addClass('hide');
     $('.questions').removeClass('hide');
     $('.info').removeClass('hide');
+    $('#stage4').removeClass('hide');
+    $('[data-index=5]').removeClass('active');
+    $('[data-index=4]').addClass('active');
 }
 
 // ajax request to skills api.
@@ -317,23 +472,36 @@ function getSkills(url,data = {}){
     });
 }
 
-// dynamically add skills
-let skillContainer = [];
-$('#addSkill').on('click',function(){
-    var skill = $("#skills option:selected").val();
+// if skillContainer is empty.
 
+function checkIfEmptySkills(){
+    if (skillContainer.length < 1) {
+        removeCircle(2);
+    }
+}
+
+// dynamically add skills
+
+let skillContainer = [];
+function addSkill(){
+    let isValid = false;
+    var skill = $("#skills option:selected").val();
+    let pattern = /([1-9])/;
     let experience = $('#experienceYear').val();
 
     if (experience.length < 1) {
         $('#experienceErr').text('Experience is required');
-        redBorder('experienceYear');
+        redBorder('experienceYear'); 
+    }else if(!experience.match(pattern)){
+            $('#experienceErr').text('* only numbers allowed');
+            redBorder('experienceYear');
     }else{
         if (skillContainer.includes(skill)) {
             $('#existSkillErr').text('This skill is already added');
         } else {
             let skilllist = $('.skilllist');
             skilllist.append(`
-                <section>
+                <section id="${skill}">
                     <div><b>${skill}</b></div>
                     <div><b>Years of experience: <strong>${experience}</strong></b></div>
                     <div><i class="fa-solid fa-circle-minus" onclick="removeSkill(this)"></i></div>
@@ -347,8 +515,35 @@ $('#addSkill').on('click',function(){
             skillContainer.push(skill);
         }
     }
-});
 
+    if (skillContainer.length > 0) {
+        isValid = true;
+    }
+    
+    return isValid;
+}
+// check if skills not empty
+
+function isEmptySkills(){
+    let isValid = false;
+    if (skillContainer.length > 0) {
+        if (!circles.includes(2)) {
+            circles.push(2);
+        }
+        isValid = true;
+    }else{
+        $('#existSkillErr').text('* select one skill');
+        redBorder('skills');
+        removeCircle(2);
+    }
+
+    return isValid;
+}
+
+$('#addSkill').on('click',function(){
+    addSkill();
+    $('#skills').css('border','1px solid #8d8d8d');
+});
 
 
 

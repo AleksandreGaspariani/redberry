@@ -115,6 +115,11 @@ body {
     opacity: 1 !important;
 }
 
+.checked {
+    opacity: 1 !important;
+    color: #FE3B1F;
+}
+
 .info {
     display: flex;
     flex-direction: column;

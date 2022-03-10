@@ -48,15 +48,15 @@
                     <section>
                         <h3>how would you prefer to work?</h3>
                         <div class="round">
-                            <input type="radio" id="fromOffice" name="work_prefer" value="Office" checked>
+                            <input type="radio" id="fromOffice" name="work_prefer" value="Office" onclick="radioButtonsOnClick()">
                             <label for="fromOffice">From Sairme Office</label>    
                         </div>
                         <div class="round">
-                            <input type="radio" id="fromHome" name="work_prefer" value="Home">
+                            <input type="radio" id="fromHome" name="work_prefer" value="Home" onclick="radioButtonsOnClick()">
                             <label for="fromHome">From Home</label>
                         </div>
                         <div class="round">
-                            <input type="radio" id="hybrid" name="work_prefer" value="Hybrid">
+                            <input type="radio" id="hybrid" name="work_prefer" value="Hybrid" onclick="radioButtonsOnClick()">
                             <label for="hybrid">Hybrid</label>
                         </div>
                     </section>
@@ -64,11 +64,11 @@
                     <section>
                         <h3>Did you contact covid 19? :(</h3>
                         <div class="round">
-                            <input type="radio" id="covidYes" name="covid_contact" value="covidYes">
+                            <input type="radio" id="covidYes" name="covid_contact" value="covidYes" onclick="radioButtonsOnClick()">
                             <label for="covidYes">Yes</label>
                         </div>
                         <div class="round">
-                            <input type="radio" id="covidNo" name="covid_contact" value="covidNo" checked>
+                            <input type="radio" id="covidNo" name="covid_contact" value="covidNo" onclick="radioButtonsOnClick()">
                             <label for="covidNo">No</label>
                         </div>
                         <div id="contactCovid" class="hide">
@@ -81,11 +81,11 @@
                     <section>
                         <h3>Have you been vaccinated?</h3>
                         <div class="round">
-                            <input type="radio" id="vaccineYes" name="covid_vaccine" value="vaccineYes">
+                            <input type="radio" id="vaccineYes" name="covid_vaccine" value="vaccineYes" onclick="radioButtonsOnClick()">
                             <label for="vaccineYes">Yes</label>
                         </div>
                         <div class="round">
-                            <input type="radio" id="vaccineNo" name="covid_vaccine" value="vaccineNo" checked>
+                            <input type="radio" id="vaccineNo" name="covid_vaccine" value="vaccineNo" onclick="radioButtonsOnClick()">
                             <label for="vaccineNo">No</label>
                         </div>
                         <div id="vaccinated" class="hide">
@@ -94,8 +94,6 @@
                             <small id="vaccineDateErr"></small>
                         </div>
                     </section>
-
-                    <button id="testbtn">Click here</button>
                 </div>
             </div>
             <div class="formstage hide" id="stage4" tab="4">
@@ -103,11 +101,11 @@
                 <section>
                     <h3>Would you attend Devtalks and maybe also organize your own?</h3>
                     <div class="round">
-                        <input type="radio" id="devTalksYes" name="dev_talks" value="Yes">
+                        <input type="radio" id="devTalksYes" name="dev_talks" value="Yes" onclick="devTalkRadionsOnClick()">
                         <label for="devTalksYes">Yes</label>
                     </div>
                     <div class="round">
-                        <input type="radio" id="devTalksNo" name="dev_talks" value="No" checked>
+                        <input type="radio" id="devTalksNo" name="dev_talks" value="No" onclick="devTalkRadionsOnClick()">
                         <label for="devTalksNo">No</label>
                     </div>
                 </section>

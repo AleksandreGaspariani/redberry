@@ -55,7 +55,6 @@ function colorizeButtons(){
 
 function sendPostRequest(){
     let myData = getAllDataForSubmit();
-    console.log(myData);
     $.ajax({
         type: 'post',
         dataType: 'json',

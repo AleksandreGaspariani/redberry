@@ -55,12 +55,15 @@ function getAllDataForSubmit(){
     let workPreference = radioButtonsOnClick();
     workPreference = workPreference.data[0];
     let hadCovid = radioButtonsOnClick();
-    let vaccinated = hadCovid.vaccinated;
-    hadCovid = hadCovid.had_covid;
+    let vaccinated = hadCovid.vaccine;
+    hadCovid = hadCovid.covid;
     let had_covid_at = $(`#covidDate`).val();
     let vaccinated_at = $('#vaccineDate').val()
 
     let devtalkStaff = devTalkRadionsOnClick();
+    let devtalkTopic = devtalkStaff.devtalk_topic;
+    let somethingSpecial = devtalkStaff.something_special;
+    devtalkStaff = devtalkStaff.devtalk;
 
     let data = [
         {
@@ -75,9 +78,9 @@ function getAllDataForSubmit(){
             'had_covid_at' : had_covid_at,
             'vaccinated' : vaccinated,
             'vaccinated_at' : vaccinated_at,
-            'will_organize_devtalk' : devtalkStaff.will_organize_devtalk,
-            'devtalk_topic' : devtalkStaff.devtalk_topic,
-            'sometehing_special' : devtalkStaff.something_special
+            'will_organize_devtalk' : devtalkStaff,
+            'devtalk_topic' : devtalkTopic,
+            'sometehing_special' : somethingSpecial
         }
     ]
     
@@ -280,6 +283,7 @@ function textValidate(text){
 }
 // Covid staff 
 let had_covid = false;
+
 let vaccinated = false;
 let had_covid_at = '';
 let vacinated_at = '';
@@ -288,6 +292,8 @@ let vacinated_at = '';
     function radioButtonsOnClick(){
         let covidStaff = false;
         let vaccineStaff = false;
+        let covid = false;
+        let vaccine = false;
         let inputs = $('#stage3 section div.round').children('input');
         let stage3 = [];
         $.each(inputs, function(i,text){
@@ -298,6 +304,7 @@ let vacinated_at = '';
 
         // had covid 
         if (stage3.includes('covidYes')) {
+            covid = true;
             $('#contactCovid').removeClass('hide');
             $('#covidDate').on('focusout',()=>{
                 let had_covid_at = $('#covidDate').val();
@@ -314,10 +321,12 @@ let vacinated_at = '';
             }
         }else if(stage3.includes('covidNo')){
             $('#contactCovid').addClass('hide');
+            covid = false;
             covidStaff = true;
         }
         // vaccinated
         if (stage3.includes('vaccineYes')) {
+            vaccine = true;
             $('#vaccinated').removeClass('hide');
 
             $('#vaccineDate').on('focusout',()=>{
@@ -345,7 +354,9 @@ let vacinated_at = '';
                     'isValid' : true,
                     'data' : stage3,
                     'had_covid' : had_covid,
-                    'vaccinated' : vaccinated
+                    'vaccinated' : vaccinated,
+                    'covid' : covid,
+                    'vaccine' : vaccine
                 };
             }else return {
                 'isValid' : false
@@ -373,6 +384,7 @@ let vacinated_at = '';
 // Dev talks
     function devTalkRadionsOnClick(){
         let willOrganizeDevtalk = false;
+        let willOrganize = false;
         let devtalkTopic = '';
         let somethingSpeial = false;
         let something_special = '';
@@ -388,7 +400,7 @@ let vacinated_at = '';
         // devtalks
         if (stage4.includes('Yes')) {
             stage4 = [true];
-            
+            willOrganize = true;
             $('#devTalkTextarea').removeClass('hide');
             $('#devtalks').on('focusout',()=>{
                 if ($('#devtalks').val().length > 0) {
@@ -406,8 +418,9 @@ let vacinated_at = '';
             }
         }else if (stage4.includes('No')) {
             stage4 = [false];
+            willOrganize = false;
             willOrganizeDevtalk = true;
-            devtalkTopic =  $('#devtalks').text('');
+            devtalkTopic =  '';
             $('#devTalkTextarea').addClass('hide');
         }
 
@@ -425,6 +438,7 @@ let vacinated_at = '';
             somethingSpeial = true;
             something_special = $('#somethingSpecial').val();
         }
+        console.log(devtalkTopic);
         if (somethingSpeial && willOrganizeDevtalk) {
             if (stage4.length > 0) {
                 return {
@@ -432,7 +446,8 @@ let vacinated_at = '';
                     'data' : stage4,
                     'will_organize_devtalk' : willOrganizeDevtalk,
                     'devtalk_topic' : devtalkTopic,
-                    'something_special' : something_special
+                    'something_special' : something_special,
+                    'devtalk' : willOrganize
                 }
             }else{
                 return {
@@ -623,7 +638,7 @@ function getApplications(){
         type: 'GET',
         url: 'https://bootcamp-2022.devtest.ge/api/applications',
         data: {
-            'token' : '89nOpas|asdanjjh^&as'
+            'token' : '7f95c0a2-a90a-4abc-aa50-5dc6ff554316'
         },
         success: function(applications){
 

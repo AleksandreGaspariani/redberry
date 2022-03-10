@@ -39,13 +39,68 @@ function colorizeButtons(){
     $('.fa-circle').removeClass('checked');
 
     circles.forEach(btn => {
-        console.log(btn);
         $(`[data-index=${btn}]`).addClass('checked');
     });
+}
+// get all data for submit post.
+
+
+function getAllDataForSubmit(){
+    let uniq_token = "7f95c0a2-a90a-4abc-aa50-5dc6ff554316";
+    let firstname = $('#firstname').val();
+    let lastname = $('#lastname').val();
+    let email = $('#email').val();
+    let number = $('#number').val();
+    let skillObj = $('.skilllist').children();
+    let workPreference = radioButtonsOnClick();
+    workPreference = workPreference.data[0];
+    let hadCovid = radioButtonsOnClick();
+    let vaccinated = hadCovid.vaccinated;
+    hadCovid = hadCovid.had_covid;
+    let had_covid_at = $(`#covidDate`).val();
+    let vaccinated_at = $('#vaccineDate').val()
+
+    let devtalkStaff = devTalkRadionsOnClick();
+
+    let data = [
+        {
+            'token' : uniq_token,
+            'first_name' : firstname,
+            'last_name' : lastname,
+            'email' : email,
+            'phone' : number,
+            'skills' : [],
+            'work_preference': workPreference,
+            'had_covid' : hadCovid,
+            'had_covid_at' : had_covid_at,
+            'vaccinated' : vaccinated,
+            'vaccinated_at' : vaccinated_at,
+            'will_organize_devtalk' : devtalkStaff.will_organize_devtalk,
+            'devtalk_topic' : devtalkStaff.devtalk_topic,
+            'sometehing_special' : devtalkStaff.something_special
+        }
+    ]
+    
+    for (let index = 0; index < skillObj.length; index++){
+        let getIdOfSkill = $(skillObj[index]).attr('name');
+        getIdOfSkill = getIdOfSkill.split('-');
+        getIdOfSkill = getIdOfSkill[1];
+
+
+        let getExperience = $(skillObj[index]).find('strong').text();
+
+        let skillArr = {"id":getIdOfSkill,"experience":getExperience};
+        data[0].skills.push(skillArr);
+    }
+    
+
+    console.log(data);
+    return data;
 }
 
 // validation
 $('[data-index=5]').on('click',()=>{
+    getAllDataForSubmit();
     getDevTalkData();
     if (getDevTalkData()) {
         $('.info').addClass('hide');
@@ -288,7 +343,9 @@ let vacinated_at = '';
             if (stage3.length == 3) {
                 return {
                     'isValid' : true,
-                    'data' : stage3
+                    'data' : stage3,
+                    'had_covid' : had_covid,
+                    'vaccinated' : vaccinated
                 };
             }else return {
                 'isValid' : false
@@ -316,7 +373,9 @@ let vacinated_at = '';
 // Dev talks
     function devTalkRadionsOnClick(){
         let willOrganizeDevtalk = false;
+        let devtalkTopic = '';
         let somethingSpeial = false;
+        let something_special = '';
         let stage4 = [];
         let inputs = $('#stage4 section div.round').children('input');
         // devtalks radio buttons
@@ -341,11 +400,14 @@ let vacinated_at = '';
                 }
             });
             if ($('#devtalks').val().length > 0) {
+                devtalkTopic =  $('#devtalks').val();
                 willOrganizeDevtalk = true;
+
             }
         }else if (stage4.includes('No')) {
             stage4 = [false];
             willOrganizeDevtalk = true;
+            devtalkTopic =  $('#devtalks').text('');
             $('#devTalkTextarea').addClass('hide');
         }
 
@@ -361,23 +423,25 @@ let vacinated_at = '';
         });
         if ($('#somethingSpecial').val().length > 0) {
             somethingSpeial = true;
+            something_special = $('#somethingSpecial').val();
         }
         if (somethingSpeial && willOrganizeDevtalk) {
             if (stage4.length > 0) {
                 return {
                     'isValid' : true,
-                    'data' : stage4
+                    'data' : stage4,
+                    'will_organize_devtalk' : willOrganizeDevtalk,
+                    'devtalk_topic' : devtalkTopic,
+                    'something_special' : something_special
                 }
             }else{
                 return {
                     'isValid' : false,
-                    'data' : stage4
                 }
             }
         }else{
             return {
                 'isValid' : false,
-                'data' : stage4
             }
         }
 
@@ -486,6 +550,9 @@ let skillContainer = [];
 function addSkill(){
     let isValid = false;
     var skill = $("#skills option:selected").val();
+    var skill_id = $("#skills option:selected").attr('id');
+    skill_id = skill_id.split('-');
+    skill_id = skill_id[1];
     let pattern = /([1-9])/;
     let experience = $('#experienceYear').val();
 
@@ -499,9 +566,10 @@ function addSkill(){
         if (skillContainer.includes(skill)) {
             $('#existSkillErr').text('This skill is already added');
         } else {
+
             let skilllist = $('.skilllist');
             skilllist.append(`
-                <section id="${skill}">
+                <section id="${skill}" name="id-${skill_id}">
                     <div><b>${skill}</b></div>
                     <div><b>Years of experience: <strong>${experience}</strong></b></div>
                     <div><i class="fa-solid fa-circle-minus" onclick="removeSkill(this)"></i></div>
